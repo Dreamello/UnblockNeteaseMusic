@@ -64,16 +64,21 @@ const token = () => {
 // }
 
 const search = info => {
+	
+    console.log("===================xiami search")
 	const url =
 		'http://api.xiami.com/web?v=2.0&app_key=1' +
 		'&key=' + encodeURIComponent(info.keyword) + '&page=1' +
 		'&limit=20&callback=jsonp&r=search/songs'
+
+    console.log(url + "\n")
 
 	return request('GET', url, headers)
 	.then(response => response.jsonp())
 	.then(jsonBody => {
 		const list = jsonBody.data.songs.map(format)
 		const matched = select(list, info)
+    console.log("===============xiami matched: " + matched + "\n")
 		return matched ? matched.id : Promise.reject()
 	})
 }
@@ -105,16 +110,23 @@ const search = info => {
 // }
 
 const track = id => {
+  console.log("===================xiami track\n")
 	const url =
 		'https://api.xiami.com/web?v=2.0&app_key=1' +
 		'&id=' + id + '&callback=jsonp&r=song/detail'
 
 	return request('GET', url, headers)
 	.then(response => response.jsonp())
-	.then(jsonBody =>
-		jsonBody.data.song.listen_file || Promise.reject()
-	)
-	.catch(() => insure().xiami.track(id))
+	.then(jsonBody => {
+    console.log("========xiami then\n")
+		return jsonBody.data.song.listen_file || Promise.reject()
+  })
+	
+	.catch(() =>{
+    console.log("========xiami catch\n")
+    return insure().xiami.track(id)
+  })
+//	.catch(() => insure().xiami.track(id))
 }
 
 const check = info => cache(search, info).then(track)

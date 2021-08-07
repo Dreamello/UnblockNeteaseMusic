@@ -7,7 +7,7 @@ const headers = {
 	'origin': 'http://y.qq.com/',
 	'referer': 'http://y.qq.com/',
 	// 'cookie': null, // 'uin=; qm_keyst=',
-	'cookie': 'uin=979090941; qm_keyst=Q_H_L_2iuah360eeyHj8vvx4rgSIDkqDLB1qAerLETSG-cYx38mp8DPGGv3Ngz0DLtkf9',
+	'cookie': 'uin=979090941; qm_keyst=Q_H_L_2KY_e360eSc_PDUM-jstCIrY_AzHgo79Nmyiy3_Z61sXZ-iBBAXcPjSmMqjERW6',
 }
 
 const playable = song => {

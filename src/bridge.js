@@ -16,6 +16,7 @@ const router = {
 const distribute = (url, router) =>
 	Promise.resolve()
 	.then(() => {
+		console.log("DISTRIBUTE!!\n")
 		const route = url.pathname.slice(1).split('/').map(path => decodeURIComponent(path))
 		let pointer = router, argument = decodeURIComponent(url.query)
 		try {argument = JSON.parse(argument)} catch(e) {}
