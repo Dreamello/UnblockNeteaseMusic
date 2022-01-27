@@ -20,25 +20,21 @@ const playable = song => {
 }
 
 const format = song => ({
-	id: {song: song.mid, file: song.file.media_mid},
-	name: song.name,
+	id: {song: song.songmid, file: song.media_mid},
+	name: song.songname,
 	duration: song.interval * 1000,
-	album: {id: song.album.mid, name: song.album.name},
+	album: {id: song.albummid, name: song.albumname},
 	artists: song.singer.map(({mid, name}) => ({id: mid, name}))
 })
 
 const search = info => {
-	const url =
-		'https://c.y.qq.com/soso/fcgi-bin/client_search_cp?' +
-		'ct=24&qqmusic_ver=1298&new_json=1&remoteplace=txt.yqq.center&' +
-		'&t=0&aggr=1&cr=1&catZhida=1&lossless=0&' +
-		'flag_qc=0&p=1&n=20&w=' + encodeURIComponent(info.keyword) + '&' +
-		'g_tk=5381&jsonpCallback=MusicJsonCallback10005317669353331&loginUin=0&hostUin=0&' +
-		'format=jsonp&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0'
+	// const url = "https://c.y.qq.com/soso/fcgi-bin/client_search_cp?w=" + "Smoke Filled Room" // change this if you want to hardcode search string
+	const url = "https://c.y.qq.com/soso/fcgi-bin/client_search_cp?w=" + encodeURIComponent(info.keyword) // change this if you want to hardcode search string
   console.log(`[INFO] QQMusic search query: ${url}`) // Added
 	return request('GET', url)
 	.then(response => response.jsonp())
 	.then(jsonBody => {
+    console.log(jsonBody)
 		const list = jsonBody.data.song.list.map(format)
 		const matched = select(list, info)
 		return matched ? matched.id : Promise.reject()
